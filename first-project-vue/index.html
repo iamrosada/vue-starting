@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+</head>
+<body>
+
+
+  <div id="app">
+    <h2>Total de produtos: {{totalProducts}}</h2>
+    <!-- <h2> {{product}} x-produto está em estoque  </h2> -->
+  <ul>
+    <li v-for="product in products">
+      <input type="number" v-model.number="product.quantity" />
+      {{product.quantity}}  {{product.name}}
+      <span v-if="product.quantity===0">PRODUTO FORA DE ESTOQUE</span>
+      <button @click="product.quantity++">Add</button>
+      <button @click="product.quantity--">Remove</button>
+    </li>
+  </ul>
+  </div>
+
+
+
+</body>
+<script src="https://unpkg.com/vue@next"></script>
+
+<script>
+  const app = Vue.createApp({
+  data() {
+    return {
+      // products: ['Deus', 'jesus', 'Rosada'],
+      products:[
+        {
+          quantity: 1,
+          name: "Camisa"
+        },
+        {
+          quantity: 0,
+          name: "Jaqueta"
+        },
+        {
+          quantity: 7,
+          name: "Calça"
+        },
+        {
+          quantity: 3,
+          name: "Sapato"
+        },
+      ]
+    }
+  },
+  computed:{
+    totalProducts(){
+      return this.products.reduce((sum, product)=>{
+        return sum + product.quantity
+      },0)
+    }
+  },
+  removeProducts(item){
+    if(item>=0){
+      item--;
+    }
+  }
+  })
+
+  const mountedApp = app.mount("#app")
+</script>
+</html>
+
+
